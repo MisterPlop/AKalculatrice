@@ -1,7 +1,6 @@
 package com.example.akalculatrice
 
 import android.os.Bundle
-import android.os.SystemClock
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -35,25 +34,34 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AKalculatriceTheme {
+                // Déclaration des variables
+                // Dont la liste des boutons, organisés par rangées
                 var nombre by remember { mutableStateOf("0") }
                 var operande by remember { mutableStateOf("0") }
                 var operateur by remember { mutableStateOf("+") }
                 var affichage by remember { mutableStateOf("0") }
+                val boutons = listOf(
+                    listOf("7", "8", "9", "+"),
+                    listOf("4", "5", "6", "-"),
+                    listOf("1", "2", "3", "x"),
+                    listOf("C", "0", ".", "/")
+                )
                 Column {
                     Banniere()
-                    Column (modifier = Modifier.padding(8.dp)){
+                    Column(modifier = Modifier.padding(8.dp)) {
                         // Affichage de l'opération
                         Row(
                             modifier = Modifier.fillMaxWidth(),
-                        ){
+                        ) {
                             Box(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(40.dp),
                                 contentAlignment = Alignment.TopEnd
-                            ){
+                            ) {
                                 Text(
-                                    text = "$nombre $operateur $operande",                                    fontWeight = FontWeight.ExtraBold,
+                                    text = "$nombre $operateur $operande",
+                                    fontWeight = FontWeight.ExtraBold,
                                     fontSize = 30.sp,
                                     fontFamily = FontFamily.Monospace,
                                     color = LightOrange
@@ -63,205 +71,85 @@ class MainActivity : ComponentActivity() {
                         // Affichage du calcul
                         Row(
                             modifier = Modifier.fillMaxWidth(),
-                        ){
+                        ) {
                             Box(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(40.dp),
                                 contentAlignment = Alignment.Center
-                            ){
+                            ) {
                                 Text(
                                     text = "$affichage",
                                     fontWeight = FontWeight.ExtraBold,
                                     fontSize = 50.sp,
                                     fontFamily = FontFamily.Monospace,
-                                    color = DarkOrange
+                                    color = DarkOrange,
+                                    lineHeight = 60.sp
                                 )
                             }
                         }
-                        // Boutons
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.spacedBy(5.dp)
-                        ){
-                            Bouton(
-                                text = "7",
-                                onClick = {
-                                    nombre = CheckError(nombre)
-                                    operande = ChangerOperande(
-                                        chiffre = "7",
-                                        oldChiffre = operande
-                                    )},
-                                modifier = Modifier.weight(1f),
-                            )
-                            Bouton(
-                                text = "8",
-                                onClick = {
-                                    nombre = CheckError(nombre)
-                                    operande = ChangerOperande(
-                                    chiffre = "8",
-                                    oldChiffre = operande
-                                )},
-                                modifier = Modifier.weight(1f),
-                            )
-                            Bouton(
-                                text = "9",
-                                onClick = {
-                                    nombre = CheckError(nombre)
-                                    operande = ChangerOperande(
-                                    chiffre = "9",
-                                    oldChiffre = operande
-                                )},
-                                modifier = Modifier.weight(1f),
-                            )
-                            Bouton(
-                                text = "+",
-                                onClick = { operateur = "+" },
-                                modifier = Modifier.weight(1f),
-                                containercolor = DarkBlue
-                            )
-                        }
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.spacedBy(5.dp)
-                        ){
-                            Bouton(
-                                text = "4",
-                                onClick = {
-                                    nombre = CheckError(nombre)
-                                    operande = ChangerOperande(
-                                    chiffre = "4",
-                                    oldChiffre = operande
-                                )},
-                                modifier = Modifier.weight(1f),
-                            )
-                            Bouton(
-                                text = "5",
-                                onClick = {
-                                    nombre = CheckError(nombre)
-                                    operande = ChangerOperande(
-                                    chiffre = "5",
-                                    oldChiffre = operande
-                                )},
-                                modifier = Modifier.weight(1f),
-                            )
-                            Bouton(
-                                text = "6",
-                                onClick = {
-                                    nombre = CheckError(nombre)
-                                    operande = ChangerOperande(
-                                    chiffre = "6",
-                                    oldChiffre = operande
-                                )},
-                                modifier = Modifier.weight(1f),
-                            )
-                            Bouton(
-                                text = "-",
-                                onClick = { operateur = "-" },
-                                modifier = Modifier.weight(1f),
-                                containercolor = DarkBlue
-                            )
-                        }
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.spacedBy(5.dp)
-                        ){
-                            Bouton(
-                                text = "1",
-                                onClick = {
-                                    nombre = CheckError(nombre)
-                                    operande = ChangerOperande(
-                                    chiffre = "1",
-                                    oldChiffre = operande
-                                )},
-                                modifier = Modifier.weight(1f),
-                            )
-                            Bouton(
-                                text = "2",
-                                onClick = {
-                                    nombre = CheckError(nombre)
-                                    operande = ChangerOperande(
-                                    chiffre = "2",
-                                    oldChiffre = operande
-                                )},
-                                modifier = Modifier.weight(1f),
-                            )
-                            Bouton(
-                                text = "3",
-                                onClick = {
-                                    nombre = CheckError(nombre)
-                                    operande = ChangerOperande(
-                                    chiffre = "3",
-                                    oldChiffre = operande
-                                )},
-                                modifier = Modifier.weight(1f),
-                            )
-                            Bouton(
-                                text = "x",
-                                onClick = { operateur = "x"},
-                                modifier = Modifier.weight(1f),
-                                containercolor = DarkBlue
-                            )
-                        }
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.spacedBy(5.dp)
-                        ){
-                            Bouton(
-                                text = "C",
-                                onClick = {
-                                    operande = ChangerOperande(
-                                        chiffre = "0",
-                                        oldChiffre = operande,
-                                        action = "C"
+                        // Génération des boutons pour les nombres et opérateurs via une boucle
+                        boutons.forEach { ligne ->
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.spacedBy(5.dp)
+                            ) {
+                                ligne.forEach { bouton ->
+                                    Bouton(
+                                        text = bouton,
+                                        onClick = {
+                                            when (bouton) {
+                                                // Réinitialise le dernier chiffre
+                                                "C" -> operande = ChangerOperande("0", operande, action = "C")
+                                                "." -> {
+                                                    // Ajoute un point si pas déjà inséré
+                                                    if (!operande.contains(".")) { // évite le chaînage de points
+                                                        operande = ChangerOperande(".", operande)
+                                                    }
+                                                }
+                                                // Change l'opérateur
+                                                in listOf("+", "-", "x", "/") -> operateur = bouton
+                                                else -> {
+                                                    nombre = CheckError(nombre)
+                                                    operande = ChangerOperande(bouton, operande)
+                                                }
+                                            }
+                                        },
+                                        // Donne un poids égal à tous les boutons, pour qu'ils occupent le même espace
+                                        modifier = Modifier.weight(1f),
+                                        // Vive les couleurs
+                                        containercolor = if (bouton in listOf("+", "-", "x", "/")) DarkBlue else SkyBlue
                                     )
-                                },
-                                modifier = Modifier.weight(1f),
-                            )
-                            Bouton(
-                                text = "0",
-                                onClick = {
-                                    nombre = CheckError(nombre)
-                                    operande = ChangerOperande(
-                                    chiffre = "0",
-                                    oldChiffre = operande
-                                )},
-                                modifier = Modifier.weight(1f),
-                            )
-                            Bouton(
-                                text = ".",
-                                onClick = { SystemClock.sleep(100) },
-                                modifier = Modifier.weight(1f),
-                            )
-                            Bouton(
-                                text = "/",
-                                onClick = { operateur = "/" },
-                                modifier = Modifier.weight(1f),
-                                containercolor = DarkBlue
-                            )
+                                }
+                            }
                         }
+
+                        // Boutons "=" et "RESET"
+                        // On les gère en dehors de la boucle, ils sont + spécifiques
                         Row(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.spacedBy(5.dp)
-                        ){
+                        ) {
+                            // Bouton "="
                             Bouton(
                                 text = "=",
                                 onClick = {
-                                    var res = Calcul(
+                                    val res = Calcul(
                                         nombre = nombre,
                                         operateur = operateur,
                                         operande = operande
                                     )
-                                    if(res != "Division par zéro !"){
-                                        nombre = res
+                                    if (res != "Division par zéro !") {
+                                        // Schéma usuel :
+                                        nombre = res // Met à jour le résultat
                                         affichage = nombre
-                                        operateur = "+"
-                                        operande = "0"
-                                    }
-                                    else {
+                                        operateur = "+" // Réinitialise l'opérateur
+                                        operande = "0" // Réinitialise l'opérande
+                                    } else {
+                                        // Message d'erreur
                                         affichage = res
                                     }
-                                          },
+                                },
                                 modifier = Modifier.weight(1f),
                                 containercolor = DarkBlue
                             )
@@ -269,7 +157,8 @@ class MainActivity : ComponentActivity() {
                         Row(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.spacedBy(5.dp)
-                        ){
+                        ) {
+                            // Bouton "RESET"
                             Bouton(
                                 text = "RESET",
                                 onClick = {
@@ -277,7 +166,7 @@ class MainActivity : ComponentActivity() {
                                     operateur = "+"
                                     operande = "0"
                                     affichage = nombre
-                                    },
+                                },
                                 modifier = Modifier.weight(1f),
                                 containercolor = Blue
                             )
@@ -289,9 +178,13 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+
+// Fonction qui sert à générer/afficher la bannière
 @Composable
 fun Banniere(){
     Box(
+        // Modificateurs pour prendre toute la largeur de l'écran
+        // Hauteur définie avec .dp, et couleurs définies dans Color.kt
         modifier = Modifier
             .fillMaxWidth()
             .height(140.dp)
@@ -308,16 +201,17 @@ fun Banniere(){
     }
 }
 
+// Fonction pour générer un bouton
 @Composable
 fun Bouton(
     text: String,
     onClick: () -> Unit,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier, // Modifier pour changer de style
     containercolor: Color = SkyBlue
 ){
     Button(
         onClick = onClick,
-        modifier = modifier
+        modifier = modifier // modifier pour les changements esthétiques
             .padding(8.dp)
             .fillMaxWidth()
             .height(60.dp),
@@ -332,35 +226,50 @@ fun Bouton(
     }
 }
 
-fun ChangerOperande(chiffre : String, oldChiffre : String, action: String="A"): String{
-    if(action != "C"){
-        if(oldChiffre == "0"){
-            return chiffre
+// Change l'opérande pour le calcul et son affichage
+fun ChangerOperande(chiffre: String, oldChiffre: String, action: String = "A"): String {
+    if (action != "C") {
+        if (chiffre == ".") {
+            // Si le point est déjà présent, on retourne directement l'ancien chiffre
+            if (oldChiffre.contains(".")) {
+                return oldChiffre
+            }
+            // Si l'ancien chiffre est "0", on retourne "0."
+            if (oldChiffre == "0") {
+                return "0."
+            }
+            // Sinon, on ajoute le point au chiffre existant
+            return oldChiffre + "."
+        } else {
+            if (oldChiffre == "0") {
+                return chiffre
+            } else {
+                return oldChiffre + chiffre
+            }
         }
-        else {
-            return oldChiffre + chiffre
-        }
-    }
-    else{
-        if(oldChiffre.length >1){
+    } else {
+        //Si l'action est "C", on supprime le dernier caractère
+        if (oldChiffre.length > 1) {
             return oldChiffre.dropLast(1)
-        }
-        else{
-            return "0"
+        } else {
+            return "0" // On évite de retirer le caractère s'il est seul et le dernier
         }
     }
 }
 
-fun Calcul(nombre: String, operateur:String, operande: String): String{
+fun Calcul(nombre: String, operateur: String, operande: String): String {
     var newNombre = "0"
-    when(operateur){
-        "+" -> newNombre = (nombre.toInt() + operande.toInt()).toString()
-        "-" -> newNombre = (nombre.toInt() - operande.toInt()).toString()
-        "x" -> newNombre = (nombre.toInt() * operande.toInt()).toString()
-        "/" -> if(operande == "0"){newNombre="Division par zéro !"} else{newNombre = (nombre.toInt()/operande.toInt()).toString()
+    when (operateur) { // Différents calculs appliqués
+        "+" -> newNombre = (nombre.toDouble() + operande.toDouble()).toString()
+        "-" -> newNombre = (nombre.toDouble() - operande.toDouble()).toString()
+        "x" -> newNombre = (nombre.toDouble() * operande.toDouble()).toString()
+        "/" -> if (operande == "0") { //Fail-safe de division par 0
+            newNombre = "Division par zéro !"
+        } else {
+            newNombre = (nombre.toDouble() / operande.toDouble()).toString()
         }
     }
-    return newNombre
+    return FormatDecimales(newNombre) // Formatte le résultat avant de le retourner
 }
 
 fun CheckError(nombre : String): String{
@@ -371,5 +280,15 @@ fun CheckError(nombre : String): String{
     else{
         ret = nombre
         return ret
+    }
+}
+
+//vérifie si un nombre a une partie décimale ou non
+fun FormatDecimales(result: String): String {
+    val number = result.toDoubleOrNull()
+    return if (number != null && number % 1.0 == 0.0) {
+        number.toInt().toString() // Retourne un entier si la partie décimale est 0
+    } else {
+        result // Retourne le résultat tel quel avec virgule
     }
 }
